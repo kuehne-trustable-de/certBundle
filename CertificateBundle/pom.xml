@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+  	<groupId>de.trustable.ca3s</groupId>
+	<artifactId>CertificateBundle</artifactId>
+  	<version>0.0.3-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>CerttificateBundle</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		
+		<jUnit.version>4.12</jUnit.version>
+		
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.25</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${jUnit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>trustable.eu</id>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+  
+  	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>trustable.eu</id>
+			<name>trustable Repository</name>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<layout>default</layout>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>Snap_trustable.eu</id>
+			<name>trustable Snapshots</name>
+			<url>https://trustable.eu/artifactory/ca3s</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+</project>

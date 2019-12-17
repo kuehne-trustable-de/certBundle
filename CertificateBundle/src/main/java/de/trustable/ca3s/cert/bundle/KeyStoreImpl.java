@@ -41,9 +41,6 @@ public class KeyStoreImpl extends KeyStoreSpi{
 		
 		LOG.debug("engineGetKey({}, ***** )", alias);
 		
-		LOG.debug("", new Exception());
-		
-		
 		KeyCertBundle kcb = certMap.findBundleForAlias(alias);
 		if( kcb == null ) {
 			LOG.debug("engineGetKey({}, ***** ) throws UnrecoverableKeyException ", alias);

@@ -26,11 +26,20 @@ public class TimedRenewalKeyManager extends X509ExtendedKeyManager {
 	private X509KeyManager defaultKeyManager;
     private TimedRenewalCertMap certMap;
     
+/*    
     public TimedRenewalKeyManager(final X509KeyManager defaultKeyManager, final BundleFactory bundleFactory) {
 		LOG.debug("cTor KeyStoreImpl(bundleFac) called");
 		
 		this.defaultKeyManager = defaultKeyManager;
 		this.certMap = new TimedRenewalCertMap(bundleFactory);
+   }
+*/
+    
+    public TimedRenewalKeyManager(final X509KeyManager defaultKeyManager, final TimedRenewalCertMap certMap) {
+		LOG.debug("cTor KeyStoreImpl(bundleFac) called");
+		
+		this.defaultKeyManager = defaultKeyManager;
+		this.certMap = certMap;
    }
 
 	public X509Certificate[] getCertificateChain(String alias) {

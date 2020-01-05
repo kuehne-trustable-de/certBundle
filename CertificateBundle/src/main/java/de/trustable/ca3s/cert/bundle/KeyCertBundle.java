@@ -15,7 +15,8 @@ public class KeyCertBundle {
 	Key key;
 	
 	Date creationDate;
-	
+
+	boolean fallbackCert = false;
 	
 	public KeyCertBundle( final String alias, final X509Certificate[] certificateChain, final X509Certificate certificate, final Key key) {
 		this.alias = alias;
@@ -60,5 +61,20 @@ public class KeyCertBundle {
 		return creationDate;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isFallbackCert() {
+		return fallbackCert;
+	}
+	
+	/**
+	 * 
+	 * @param fallbackCert
+	 */
+	public void setFallbackCert(final boolean fallbackCert) {
+		this.fallbackCert = fallbackCert;
+	}
 	
 }

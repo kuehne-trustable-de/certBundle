@@ -28,11 +28,21 @@ public class KeyStoreImpl extends KeyStoreSpi{
     private static final Logger LOG = LoggerFactory.getLogger(KeyStoreImpl.class);
 
     private TimedRenewalCertMap certMap;
+    private String alias = "defaultAlias";
+
     
-     public KeyStoreImpl(final BundleFactory bundleFactory) {
+    public KeyStoreImpl(final BundleFactory bundleFactory) {
 		LOG.debug("cTor KeyStoreImpl(bundleFac) called");
 		
 		certMap = new TimedRenewalCertMap(bundleFactory);
+    }
+    
+
+    public KeyStoreImpl(final TimedRenewalCertMap certMap, final String alias) {
+		LOG.debug("cTor KeyStoreImpl(certMap, alias) called");
+		
+		this.certMap = certMap;
+		this.alias = alias;
     }
     
 

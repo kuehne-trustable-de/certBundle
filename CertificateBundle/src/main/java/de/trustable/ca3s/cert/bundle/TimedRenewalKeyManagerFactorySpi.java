@@ -42,11 +42,19 @@ public class TimedRenewalKeyManagerFactorySpi  extends KeyManagerFactorySpi
 
     private TimedRenewalKeyManager keyManager = null;
     private String algoName = null;
-    private BundleFactory bundleFactory = null;
-
+//    private BundleFactory bundleFactory = null;
+    TimedRenewalCertMap certMap;
+    
+/*
     public TimedRenewalKeyManagerFactorySpi(final String algoName, final BundleFactory bundleFactory) {
     	this.algoName = algoName;
     	this.bundleFactory = bundleFactory;
+    }
+*/
+    
+    public TimedRenewalKeyManagerFactorySpi(final String algoName, final TimedRenewalCertMap certMap) {
+    	this.algoName = algoName;
+    	this.certMap = certMap;
     }
     
     public KeyManager[] engineGetKeyManagers()
@@ -85,7 +93,7 @@ public class TimedRenewalKeyManagerFactorySpi  extends KeyManagerFactorySpi
                     DEFAULT_ALGO+" did not produce a X509 Key manager");
         }
             
-        this.keyManager = new TimedRenewalKeyManager(x509KeyManager, bundleFactory);
+        this.keyManager = new TimedRenewalKeyManager(x509KeyManager, certMap);
         
         Security.setProperty("ssl.KeyManagerFactory.algorithm", algoName);
 

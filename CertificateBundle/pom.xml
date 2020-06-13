@@ -5,10 +5,39 @@
 
   	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>CertificateBundle</artifactId>
-  	<version>0.0.4-SNAPSHOT</version>
+  	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>CerttificateBundle</name>
+	<name>CertificateBundle</name>
+
+	<licenses>
+		<license>
+    		<name>Apache License, Version 2.0</name>
+    		<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+  		</license>	
+  	</licenses>
+
+	<developers>
+		<developer>
+			<name>Andreas Kuehne</name>
+			<email>kuehne@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+		<developer>
+			<name>Damian Wabisch</name>
+			<email>damian@trustable.de</email>
+			<organization>trustable solutions UG</organization>
+			<organizationUrl>https://trustable.de</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>https://github.com/kuehne-trustable-de/certBundle.git</connection>
+		<developerConnection>https://github.com/kuehne-trustable-de/certBundle.git</developerConnection>
+		<url>https://github.com/kuehne-trustable-de/certBundle.git</url>
+	</scm>
+    
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

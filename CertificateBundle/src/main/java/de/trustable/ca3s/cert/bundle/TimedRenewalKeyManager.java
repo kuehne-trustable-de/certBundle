@@ -58,9 +58,6 @@ public class TimedRenewalKeyManager extends X509ExtendedKeyManager {
 	public PrivateKey getPrivateKey(String alias) {
 		LOG.debug("getPrivateKey({}, ***** )", alias);
 		
-		LOG.debug("", new Exception());
-		
-		
 		KeyCertBundle kcb = certMap.findBundleForAlias(alias);
 		if( kcb == null ) {
 			LOG.debug("getPrivateKey({}, ***** ) cannot find key for alias ", alias);

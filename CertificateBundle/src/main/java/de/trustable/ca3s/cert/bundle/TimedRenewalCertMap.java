@@ -42,8 +42,7 @@ public class TimedRenewalCertMap {
 				
 				Date refreshDate = new Date(System.currentTimeMillis() + (24L * 3600L * 1000L));
 				Date now = new Date();
-				LOG.info("Task 'renewal' started on " + now + ", refreshing all certificates expiring before "
-						+ refreshDate);
+				LOG.info("Task 'renewal' started on " + now + ", refreshing #{} certificates expiring before {}", bundleSet.size(), refreshDate);
 
 				
 				for (KeyCertBundle kcb : bundleSet.values()) {
@@ -106,7 +105,12 @@ public class TimedRenewalCertMap {
 	public KeyCertBundle findBundleForAlias(final String bundleName) {
 
 		if (!bundleSet.containsKey(bundleName)) {
-			LOG.warn("findBundleForAlias('{}') failed to find KeyCertBundle", bundleName);
+			if(bundleSet.isEmpty()) {
+				LOG.debug("findBundleForAlias('{}') initial call to empty map, filling with new bundle", bundleName);
+			}else {
+				LOG.warn("findBundleForAlias('{}') failed to find KeyCertBundle", bundleName);
+			}
+			
 			try {
 				putNewBundle(bundleName);
 			} catch (GeneralSecurityException e) {

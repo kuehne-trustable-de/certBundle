@@ -48,8 +48,7 @@
 		<dependencyCheck.version>5.3.1</dependencyCheck.version>
 		<dependencyCheck.skip>false</dependencyCheck.skip>
 
-		<jUnit.version>4.12</jUnit.version>
-
+		<jUnit.version>4.13.1</jUnit.version>
 	</properties>
 
 	<dependencies>

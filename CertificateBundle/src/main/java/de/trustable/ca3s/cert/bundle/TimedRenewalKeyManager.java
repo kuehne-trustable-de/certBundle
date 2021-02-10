@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /*******************
  * <code>TimedRenewalKeyManager</code> is a key manager
  * 
- * @author
+ * @author ak
  * 
  */
 public class TimedRenewalKeyManager extends X509ExtendedKeyManager {

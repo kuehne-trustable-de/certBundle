@@ -63,7 +63,7 @@ public class KeyCertBundle {
 	
 	/**
 	 * 
-	 * @return
+	 * @return is this a fallback cert?
 	 */
 	public boolean isFallbackCert() {
 		return fallbackCert;
@@ -71,7 +71,7 @@ public class KeyCertBundle {
 	
 	/**
 	 * 
-	 * @param fallbackCert
+	 * @param fallbackCert mark this certificate as a fallback certificate
 	 */
 	public void setFallbackCert(final boolean fallbackCert) {
 		this.fallbackCert = fallbackCert;

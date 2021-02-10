@@ -17,7 +17,7 @@ public class TimedRenewalCertMap {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TimedRenewalCertMap.class);
 
-	private HashMap<String, KeyCertBundle> bundleSet = new HashMap<String, KeyCertBundle>();
+	private HashMap<String, KeyCertBundle> bundleSet = new HashMap<>();
 
 	private BundleFactory bundleFactory;	
 	private BundleFactory bundleFactoryFallback;
@@ -93,7 +93,6 @@ public class TimedRenewalCertMap {
 					if( bundle != null) {
 						bundleSet.put(bundleName, bundle);
 						LOG.debug("default bundle factory created new bundle.");
-						continue;
 					}
 				} catch (GeneralSecurityException e) {
 					LOG.warn("fallback renewal for alias '{}' failed : {}", bundleName, e.getMessage());
@@ -122,7 +121,7 @@ public class TimedRenewalCertMap {
 
 		KeyCertBundle kcb = bundleSet.get(bundleName);
 		if (kcb != null) {
-			X509Certificate x509Cert = (X509Certificate) kcb.getCertificate();
+			X509Certificate x509Cert = kcb.getCertificate();
 			LOG.info("findBundleForAlias('{}') returns {}", bundleName, x509Cert.getSubjectX500Principal().getName());
 		}
 
@@ -199,8 +198,8 @@ public class TimedRenewalCertMap {
 	}
 
 	/**
-	 * @param bundleName
-	 * @throws GeneralSecurityException
+	 * @param bundleName the name of the new bundle
+	 * @throws GeneralSecurityException a problem occured while creating a new keypair and certificate
 	 */
 	public void putNewBundle(String bundleName) throws GeneralSecurityException {
 		

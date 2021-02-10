@@ -5,7 +5,7 @@
 
 	<groupId>de.trustable.ca3s</groupId>
 	<artifactId>CertificateBundle</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<packaging>jar</packaging>
 
 	<name>CertificateBundle</name>
@@ -46,9 +46,16 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 
 		<dependencyCheck.version>5.3.1</dependencyCheck.version>
-		<dependencyCheck.skip>false</dependencyCheck.skip>
+		<dependencyCheck.skip>true</dependencyCheck.skip>
+
+		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
 
 		<jUnit.version>4.13.1</jUnit.version>
+
+		<maven-checkstyle.version>3.1.1</maven-checkstyle.version>
+		<checkstyle.version>8.32</checkstyle.version>
+		<spring-nohttp-checkstyle.version>0.0.4.RELEASE</spring-nohttp-checkstyle.version>
+
 	</properties>
 
 	<dependencies>
@@ -161,5 +168,73 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<profiles>
+		<profile>
+			<id>prepare-central</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${maven-javadoc-plugin.version}</version>
+						<configuration>
+							<detectJavaApiLink>false</detectJavaApiLink>
+							<source>${maven.compiler.source}</source>
+						</configuration>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!--plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>${maven-checkstyle.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>com.puppycrawl.tools</groupId>
+								<artifactId>checkstyle</artifactId>
+								<version>${checkstyle.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>io.spring.nohttp</groupId>
+								<artifactId>nohttp-checkstyle</artifactId>
+								<version>${spring-nohttp-checkstyle.version}</version>
+							</dependency>
+						</dependencies>
+						<configuration>
+							<configLocation>checkstyle.xml</configLocation>
+							<includes>pom.xml,README.md</includes>
+							<excludes>.git/**/*,target/**/*,node_modules/**/*,node/**/*</excludes>
+							<sourceDirectories>./</sourceDirectories>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin-->
 
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

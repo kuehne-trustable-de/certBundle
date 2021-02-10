@@ -22,6 +22,7 @@ public class TimedRenewalCertMap {
 	private BundleFactory bundleFactory;	
 	private BundleFactory bundleFactoryFallback;
 
+	private long minValiditySeconds = 24L * 3600L;
 		
 	
 	public TimedRenewalCertMap(final BundleFactory bundleFactory) {
@@ -40,7 +41,7 @@ public class TimedRenewalCertMap {
 				// try to replace fallbacks as soon as possible
 				refreshFallbackBundles();
 				
-				Date refreshDate = new Date(System.currentTimeMillis() + (24L * 3600L * 1000L));
+				Date refreshDate = new Date(System.currentTimeMillis() + (minValiditySeconds * 1000L));
 				Date now = new Date();
 				LOG.info("Task 'renewal' started on " + now + ", refreshing #{} certificates expiring before {}", bundleSet.size(), refreshDate);
 
@@ -88,7 +89,7 @@ public class TimedRenewalCertMap {
 
 				LOG.info("forcing renewal of fallback bundle for alias '{}'", bundleName);
 				try {
-					KeyCertBundle bundle = bundleFactory.newKeyBundle(bundleName);
+					KeyCertBundle bundle = bundleFactory.newKeyBundle(bundleName, minValiditySeconds);
 					if( bundle != null) {
 						bundleSet.put(bundleName, bundle);
 						LOG.debug("default bundle factory created new bundle.");
@@ -206,7 +207,7 @@ public class TimedRenewalCertMap {
 		boolean useFallback = bundleFactoryFallback != null;
 		if( bundleFactory != null) {
 			try {
-				KeyCertBundle bundle = bundleFactory.newKeyBundle(bundleName);
+				KeyCertBundle bundle = bundleFactory.newKeyBundle(bundleName, minValiditySeconds);
 				if( bundle != null) {
 					bundleSet.put(bundleName, bundle);
 					LOG.debug("default bundle factory created new bundle.");
@@ -222,7 +223,7 @@ public class TimedRenewalCertMap {
 		
 		// if set, use the fallback factory
 		if( useFallback ) {
-			KeyCertBundle bundle = bundleFactoryFallback.newKeyBundle(bundleName);
+			KeyCertBundle bundle = bundleFactoryFallback.newKeyBundle(bundleName, minValiditySeconds);
 			if( bundle != null) {
 				bundle.setFallbackCert(true);
 				bundleSet.put(bundleName, bundle);

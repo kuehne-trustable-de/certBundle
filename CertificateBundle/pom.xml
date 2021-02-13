@@ -9,6 +9,8 @@
 	<packaging>jar</packaging>
 
 	<name>CertificateBundle</name>
+	<description>bundle of key and certificate (chain) renewed by a timer before expiration</description>
+	<url>https://github.com/kuehne-trustable-de/certBundle</url>
 
 	<licenses>
 		<license>
@@ -176,6 +178,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
+						<version>3.2.0</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -192,6 +195,7 @@
 						<configuration>
 							<detectJavaApiLink>false</detectJavaApiLink>
 							<source>${maven.compiler.source}</source>
+							<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
 						</configuration>
 						<executions>
 							<execution>

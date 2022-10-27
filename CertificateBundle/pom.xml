@@ -50,7 +50,7 @@
 		<dependencyCheck.version>7.3.0</dependencyCheck.version>
 		<dependencyCheck.skip>true</dependencyCheck.skip>
 
-		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+		<maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
 
 		<jUnit.version>4.13.1</jUnit.version>
 

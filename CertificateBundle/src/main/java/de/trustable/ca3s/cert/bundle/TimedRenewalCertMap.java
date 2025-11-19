@@ -42,40 +42,38 @@ public class TimedRenewalCertMap {
             new TimerTask() {
                 public void run() {
 
-                    // try to replace fallbacks as soon as possible
-                    refreshFallbackBundles();
+                // try to replace fallbacks as soon as possible
+                refreshFallbackBundles();
 
-                    Date refreshDate = new Date(System.currentTimeMillis() + (minValiditySeconds * 1000L));
-                    Date now = new Date();
-                    LOG.info("Task 'renewal' started on " + now + ", refreshing #{} certificates expiring before {}", bundleSet.size(), refreshDate);
+                Date refreshDate = new Date(System.currentTimeMillis() + (minValiditySeconds * 1000L));
+                Date now = new Date();
+                LOG.info("Task 'renewal' started on " + now + ", refreshing #{} certificates expiring before {}", bundleSet.size(), refreshDate);
 
 
-                    for (KeyCertBundle kcb : bundleSet.values()) {
-                        String bundleName = kcb.getAlias();
+                for (KeyCertBundle kcb : bundleSet.values()) {
+                    String bundleName = kcb.getAlias();
 
-                        Date notAfter = kcb.getCertificate().getNotAfter();
-                        LOG.debug("checking renewal for alias '{}', expiring on {} ", bundleName, notAfter);
-                        if (now.after(notAfter)) {
-                            LOG.error("renewal in time FAILED for alias '{}', expired on {} !", bundleName, notAfter);
+                    Date notAfter = kcb.getCertificate().getNotAfter();
+                    LOG.debug("checking renewal for alias '{}', expiring on {} ", bundleName, notAfter);
+                    if (now.after(notAfter)) {
+                        LOG.error("renewal in time FAILED for alias '{}', expired on {} !", bundleName, notAfter);
+                    }
+
+                    if (refreshDate.after(notAfter)) {
+                        LOG.info("renewal required for alias '{}', expiring on {} ", bundleName, notAfter);
+                        try {
+                            putNewBundle(bundleName);
+
+                        } catch (GeneralSecurityException e) {
+                            LOG.warn("renewal for alias '{}' expiring on {} failed : {}", bundleName, notAfter, e.getMessage());
+                            LOG.debug("certificate renewal failed", e);
                         }
-
-                        if (refreshDate.after(notAfter)) {
-                            LOG.info("renewal required for alias '{}', expiring on {} ", bundleName, notAfter);
-                            try {
-                                putNewBundle(bundleName);
-
-                            } catch (GeneralSecurityException e) {
-                                LOG.warn("renewal for alias '{}' expiring on {} failed : {}", bundleName, notAfter, e.getMessage());
-                                LOG.debug("certificate renewal failed", e);
-                            }
-                        }
-
                     }
 
                 }
-            }, 5, 30, TimeUnit.MINUTES);
 
-
+                }
+            }, 5*60, 30*60, TimeUnit.SECONDS);
     }
 
     void refreshFallbackBundles() {

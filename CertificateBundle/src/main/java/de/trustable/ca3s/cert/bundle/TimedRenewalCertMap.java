@@ -24,7 +24,7 @@ public class TimedRenewalCertMap {
     private BundleFactory bundleFactory;
     private BundleFactory bundleFactoryFallback;
 
-    private final long minValiditySeconds = 24L * 3600L;
+    private long minValiditySeconds = 24L * 3600L;
 
 
     public TimedRenewalCertMap(final BundleFactory bundleFactory) {
@@ -226,6 +226,14 @@ public class TimedRenewalCertMap {
                 LOG.debug("fallback bundle factory created new bundle.");
             }
         }
+    }
+
+    public long getMinValiditySeconds() {
+        return minValiditySeconds;
+    }
+
+    public void setMinValiditySeconds(long minValiditySeconds) {
+        this.minValiditySeconds = minValiditySeconds;
     }
 
 

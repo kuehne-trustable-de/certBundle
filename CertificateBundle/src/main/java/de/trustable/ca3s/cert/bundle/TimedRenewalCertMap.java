@@ -25,6 +25,7 @@ public class TimedRenewalCertMap {
     private BundleFactory bundleFactoryFallback;
 
     private long minValiditySeconds = 24L * 3600L;
+    private int minValidityPercentage = 85;
 
 
     public TimedRenewalCertMap(final BundleFactory bundleFactory) {
@@ -45,15 +46,30 @@ public class TimedRenewalCertMap {
                 // try to replace fallbacks as soon as possible
                 refreshFallbackBundles();
 
-                Date refreshDate = new Date(System.currentTimeMillis() + (minValiditySeconds * 1000L));
+                Date refreshDateAbsoluteLimit = new Date(System.currentTimeMillis() + (minValiditySeconds * 1000L));
                 Date now = new Date();
-                LOG.info("Task 'renewal' started on " + now + ", refreshing #{} certificates expiring before {}", bundleSet.size(), refreshDate);
-
+                LOG.info("Task 'renewal' started on " + now + ", refreshing #{} certificates expiring before {}", bundleSet.size(), refreshDateAbsoluteLimit);
 
                 for (KeyCertBundle kcb : bundleSet.values()) {
                     String bundleName = kcb.getAlias();
 
+                    Date notBefore = kcb.getCertificate().getNotBefore();
                     Date notAfter = kcb.getCertificate().getNotAfter();
+
+                    Date refreshDate = refreshDateAbsoluteLimit;
+                    if( minValidityPercentage > 0 ) {
+                        long validityPeriod = notAfter.getTime() - notBefore.getTime();
+                        long renewalThreshold = validityPeriod * minValidityPercentage / 100;
+                        Date refreshDateRelativeLimit = new Date(System.currentTimeMillis() + renewalThreshold);
+                        LOG.info("certificate validity period {} sec., {}% of that period ends on {} ",
+                                validityPeriod / 1000, minValidityPercentage, refreshDateRelativeLimit);
+                        if( refreshDateRelativeLimit.before(refreshDateAbsoluteLimit) ) {
+                            refreshDate = refreshDateRelativeLimit;
+                            LOG.info("relative renewal date {} is before absolute limit {}", refreshDateRelativeLimit, refreshDateAbsoluteLimit);
+                        }
+                    }
+
+
                     LOG.debug("checking renewal for alias '{}', expiring on {} ", bundleName, notAfter);
                     if (now.after(notAfter)) {
                         LOG.error("renewal in time FAILED for alias '{}', expired on {} !", bundleName, notAfter);
@@ -234,6 +250,14 @@ public class TimedRenewalCertMap {
 
     public void setMinValiditySeconds(long minValiditySeconds) {
         this.minValiditySeconds = minValiditySeconds;
+    }
+
+    public int getMinValidityPercentage() {
+        return minValidityPercentage;
+    }
+
+    public void setMinValidityPercentage(int minValidityPercentage) {
+        this.minValidityPercentage = minValidityPercentage;
     }
 
 

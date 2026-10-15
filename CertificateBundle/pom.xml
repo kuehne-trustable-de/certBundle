@@ -47,7 +47,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<dependencyCheck.version>12.2.1</dependencyCheck.version>
+		<dependencyCheck.version>13.0.0</dependencyCheck.version>
 		<dependencyCheck.skip>false</dependencyCheck.skip>
 
 		<maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
